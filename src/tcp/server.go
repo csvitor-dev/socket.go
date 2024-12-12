@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"strings"
+	"time"
 )
 
 type TcpServer struct {
@@ -28,7 +29,8 @@ func (s TcpServer) ListenAndServe() {
 
 func handler(connection net.Conn) {
 	defer connection.Close()
-
+	
+	start := time.Now() 
 	buf := make([]byte, 1024)
 	_, err := connection.Read(buf)
 
@@ -41,5 +43,7 @@ func handler(connection net.Conn) {
 	if err != nil {
 		return
 	}
-	fmt.Printf("Message: %v\n", message)
+	latency := time.Since(start)
+
+	fmt.Printf("\n>> %v [%v]\n", message, latency)
 }

@@ -29,8 +29,7 @@ func (s TcpServer) ListenAndServe() {
 
 func handler(connection net.Conn) {
 	defer connection.Close()
-	
-	start := time.Now() 
+
 	buf := make([]byte, 1024)
 	_, err := connection.Read(buf)
 
@@ -43,7 +42,15 @@ func handler(connection net.Conn) {
 	if err != nil {
 		return
 	}
-	latency := time.Since(start)
 
-	fmt.Printf("\n>> %v [%v]\n", message, latency)
+	fmt.Printf("\n[%v] >> %v \n", date(), message)
+}
+
+func date() string {
+	now := time.Now()
+	year, month, day := now.Date()
+	hour, min, sec := now.Clock()
+
+	return fmt.Sprintf("%v/%v/%v | %v:%v:%v", year, month, day,
+		 hour, min, sec)
 }

@@ -11,6 +11,7 @@ func RunServer(address string) {
 		fmt.Println(err)
 		return
 	}
+	fmt.Printf("Listen on port: '%v'\n", address)
 	server.ListenAndServe()
 }
 

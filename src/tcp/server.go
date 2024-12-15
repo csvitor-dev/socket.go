@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net"
 	"strings"
-	"time"
+
+	"github.com/csvitor-dev/socket.go/utils"
 )
 
 type TcpServer struct {
@@ -43,14 +44,5 @@ func handler(connection net.Conn) {
 		return
 	}
 
-	fmt.Printf("\n[%v] >> %v \n", date(), message)
-}
-
-func date() string {
-	now := time.Now()
-	year, month, day := now.Date()
-	hour, min, sec := now.Clock()
-
-	return fmt.Sprintf("%v/%v/%v | %v:%v:%v", year, month, day,
-		 hour, min, sec)
+	fmt.Printf("\n[%v] >> %v \n", utils.LogDate(), message)
 }

@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net"
 	"strings"
-	"time"
+
+	"github.com/csvitor-dev/socket.go/utils"
 )
 
 type UdpServer struct {
@@ -51,15 +52,7 @@ func (s UdpServer) ListenAndServe() {
 			return
 		}
 
-		fmt.Printf("\n[%v] >> %v \n", date(), message)
+		fmt.Printf("\n[%v] >> %v \n", utils.LogDate(), message)
 	}
 }
-
-func date() string {
-	now := time.Now()
-	year, month, day := now.Date()
-	hour, min, sec := now.Clock()
-
-	return fmt.Sprintf("%v/%v/%v | %v:%v:%v", year, month, day,
-		 hour, min, sec)
-}		
+	

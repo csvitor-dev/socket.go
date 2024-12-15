@@ -2,6 +2,8 @@ package tcp
 
 import (
 	"fmt"
+
+	"github.com/csvitor-dev/socket.go/utils"
 )
 
 func RunServer(address string) {
@@ -25,11 +27,7 @@ func RunClient(address string) {
 		}
 		defer client.Close()
 
-		text, err := input("Enter your text: ")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		text := utils.Input("Enter your text:")
 		err = client.SendMessage(text)
 
 		if err != nil {
@@ -44,13 +42,4 @@ func RunClient(address string) {
 		}
 		fmt.Printf("Retrive: %v\n", message)
 	}
-}
-
-func input(message string) (string, error) {
-	fmt.Print(message)
-
-	var text string
-	_, err := fmt.Scanln(&text)
-
-	return text, err
 }

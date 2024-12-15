@@ -1,6 +1,10 @@
 package udp
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/csvitor-dev/socket.go/utils"
+)
 
 func RunServer(address string) {
 	server, err := NewUdpServer(address)
@@ -22,12 +26,7 @@ func RunClient(address string) {
 			return
 		}
 		defer client.Close()
-
-		text, err := input("Enter your text: ")
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		text := utils.Input("Enter your text: ")
 		err = client.SendMessage(text)
 
 		if err != nil {
@@ -42,13 +41,4 @@ func RunClient(address string) {
 		}
 		fmt.Printf("Retrive: %v\n", message)
 	}
-}
-
-func input(message string) (string, error) {
-	fmt.Print(message)
-
-	var text string
-	_, err := fmt.Scanln(&text)
-
-	return text, err
 }

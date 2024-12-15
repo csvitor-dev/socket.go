@@ -1,3 +1,3 @@
-module github.com/csvitor-dev/go-socket
+module github.com/csvitor-dev/socket.go
 
 go 1.22.4

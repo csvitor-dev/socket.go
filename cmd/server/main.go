@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/csvitor-dev/go-socket/src/udp"
+	"github.com/csvitor-dev/socket.go/src/tcp"
 )
 
 func main() {
-	udp.RunServer("localhost:8080")
+	tcp.RunServer("localhost:8080")
 }

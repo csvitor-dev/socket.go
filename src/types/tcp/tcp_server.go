@@ -21,7 +21,7 @@ func (tcp *TCPServer) NewTCPServer(address string) error {
 	if err != nil {
 		return err
 	}
-	listener, err := net.ListenTCP(address, addr)
+	listener, err := net.ListenTCP("tcp", addr)
 	
 	if err != nil {
 		return err

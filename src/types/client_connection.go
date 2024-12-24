@@ -1,7 +1,7 @@
 package types
 
 type ClientConnection interface {
-	SendMessage(string) error
-	RetriveMessage() (string, error)
+	SendMessage([]byte) error
+	RetriveMessage() ([]byte, error)
 	Close() error
 }

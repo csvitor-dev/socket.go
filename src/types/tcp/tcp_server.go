@@ -47,7 +47,7 @@ func (tcp *TCPServer) ListenAndServe() {
 			continue
 		}
 		
-		if ok := lib.HandlerConnection(conn); ok {
+		if ok := lib.ConnectionHandler(conn); ok {
 			return
 		}
 	}

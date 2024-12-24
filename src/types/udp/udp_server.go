@@ -41,7 +41,7 @@ func (udp *UDPServer) Prepare(address string) {
 
 func (udp *UDPServer) ListenAndServe() {
 	for {
-		lib.HandlerConnection(udp.connection)
+		lib.ConnectionHandler(udp.connection)
 	}
 }
 	

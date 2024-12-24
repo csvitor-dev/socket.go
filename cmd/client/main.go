@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/csvitor-dev/socket.go/src/tcp"
+	"github.com/csvitor-dev/socket.go/src/runner"
+	"github.com/csvitor-dev/socket.go/src/types/tcp"
 )
 
 func main() {
-	tcp.RunClient("localhost:8080")
+	runner.RunClient(&tcp.TCPConnection{}, "localhost:8080")
 }

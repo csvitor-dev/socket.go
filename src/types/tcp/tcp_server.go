@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/csvitor-dev/socket.go/src/lib"
+	"github.com/csvitor-dev/socket.go/pkg/socket"
 )
 
 type TCPServer struct {
@@ -47,7 +47,7 @@ func (tcp *TCPServer) ListenAndServe() {
 			continue
 		}
 		
-		if ok := lib.ConnectionHandler(conn); ok {
+		if ok := socket.ConnectionHandler(conn); ok {
 			return
 		}
 	}

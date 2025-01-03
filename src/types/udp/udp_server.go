@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/csvitor-dev/socket.go/src/lib"
+	"github.com/csvitor-dev/socket.go/pkg/socket"
 )
 
 type UDPServer struct {
@@ -41,7 +41,7 @@ func (udp *UDPServer) Prepare(address string) {
 
 func (udp *UDPServer) ListenAndServe() {
 	for {
-		lib.ConnectionHandler(udp.connection)
+		socket.ConnectionHandler(udp.connection)
 	}
 }
 	

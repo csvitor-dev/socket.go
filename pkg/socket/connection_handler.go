@@ -1,11 +1,11 @@
-package lib
+package socket
 
 import (
 	"fmt"
 	"net"
 	"strings"
 
-	"github.com/csvitor-dev/socket.go/utils"
+	"github.com/csvitor-dev/socket.go/pkg/utils"
 )
 
 func ConnectionHandler(connection net.Conn) bool {

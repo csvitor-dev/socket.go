@@ -1,7 +1,6 @@
 package tcp
 
 import (
-	"log"
 	"net"
 
 	"github.com/csvitor-dev/socket.go/pkg/socket"
@@ -15,28 +14,19 @@ func createTCPAddress(address string) (*net.TCPAddr, error) {
 	return net.ResolveTCPAddr("tcp", address)
 }
 
-func (tcp *TCPServer) NewTCPServer(address string) error {
+func NewTCPServer(address string) (*TCPServer, error) {
 	addr, err := createTCPAddress(address)
 	
 	if err != nil {
-		return err
+		return nil, err
 	}
 	listener, err := net.ListenTCP("tcp", addr)
 	
 	if err != nil {
-		return err
+		return nil, err
 	}
-	tcp.listener = listener
-	return nil
-}
 
-func (tcp *TCPServer) Prepare(address string) {
-	err := tcp.NewTCPServer(address)
-
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
+	return &TCPServer{listener: listener}, nil
 }
 
 func (tcp *TCPServer) ListenAndServe() {
@@ -47,8 +37,6 @@ func (tcp *TCPServer) ListenAndServe() {
 			continue
 		}
 		
-		if ok := socket.ConnectionHandler(conn); ok {
-			return
-		}
+		socket.ConnectionHandler(conn)
 	}
 }

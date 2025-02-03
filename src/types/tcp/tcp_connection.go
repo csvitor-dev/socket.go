@@ -1,36 +1,30 @@
 package tcp
 
 import (
-	"log"
 	"net"
 )
+
+type Struct struct {
+	Message string
+}
 
 type TCPConnection struct {
 	connection *net.TCPConn
 }
 
-func (tcp *TCPConnection) NewTCPConnection(address string) error {
+func NewTCPConnection(address string) (*TCPConnection, error) {
 	tcpAddress, err := createTCPAddress(address)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 	conn, err := net.DialTCP("tcp", nil, tcpAddress)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
-	tcp.connection = conn
-	return nil
-}
 
-func (tcp *TCPConnection) Prepare(address string) {
-	err := tcp.NewTCPConnection(address)
-
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
+	return &TCPConnection{connection: conn}, nil
 }
 
 func (tcp *TCPConnection) SendMessage(message []byte) error {

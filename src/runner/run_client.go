@@ -3,8 +3,8 @@ package runner
 import (
 	"fmt"
 
+	"github.com/csvitor-dev/socket.go/pkg/utils"
 	t "github.com/csvitor-dev/socket.go/src/types"
-	"github.com/csvitor-dev/socket.go/utils"
 )
 
 func RunClient(client t.ClientConnection, address string) {

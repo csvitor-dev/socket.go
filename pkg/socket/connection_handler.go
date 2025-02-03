@@ -1,29 +1,24 @@
 package socket
 
 import (
-	"fmt"
+	"log"
 	"net"
-	"strings"
 
 	"github.com/csvitor-dev/socket.go/pkg/utils"
 )
 
-func ConnectionHandler(connection net.Conn) bool {
+func ConnectionHandler(connection net.Conn) {
 	defer connection.Close()
 
 	buf := make([]byte, 1024)
 	_, err := connection.Read(buf)
 
+	log.Printf("[%v] <RECEIVE>\n", utils.LogDate())
+	
 	if err != nil {
-		return false
+		return
 	}
-	message := strings.ToUpper(string(buf))
-	_, err = connection.Write([]byte(message))
-
-	if err != nil {
-		return false
-	}
-	fmt.Printf("\n[%v] >> %v \n", utils.LogDate(), message)
-
-	return message == "EXIT"
+	_, _ = connection.Write(buf)
+	
+	log.Printf("[%v] <SEND>\n", utils.LogDate())
 }

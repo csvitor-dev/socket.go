@@ -4,19 +4,19 @@ import (
 	"fmt"
 
 	"github.com/csvitor-dev/socket.go/pkg/utils"
-	"github.com/csvitor-dev/socket.go/src/types/tcp"
+	"github.com/csvitor-dev/socket.go/src/tcp"
 )
 
 func main() {
-	client, err := tcp.NewTCPConnection("localhost:8080")
-
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer client.Close()
-
 	for {
+		client, err := tcp.NewTCPConnection(":8080")
+
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer client.Close()
+
 		text := utils.Input("Message: ")
 		
 		client.SendMessage([]byte(text))
@@ -29,5 +29,4 @@ func main() {
 		}
 		fmt.Println(string(bytes))
 	}
-	
 }

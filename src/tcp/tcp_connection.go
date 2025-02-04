@@ -4,10 +4,6 @@ import (
 	"net"
 )
 
-type Struct struct {
-	Message string
-}
-
 type TCPConnection struct {
 	connection *net.TCPConn
 }

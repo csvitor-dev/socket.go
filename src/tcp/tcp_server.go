@@ -4,10 +4,12 @@ import (
 	"net"
 
 	"github.com/csvitor-dev/socket.go/pkg/socket"
+	"github.com/csvitor-dev/socket.go/pkg/types"
 )
 
 type TCPServer struct {
 	listener *net.TCPListener
+	handler types.Process
 }
 
 func createTCPAddress(address string) (*net.TCPAddr, error) {
@@ -26,7 +28,14 @@ func NewTCPServer(address string) (*TCPServer, error) {
 		return nil, err
 	}
 
-	return &TCPServer{listener: listener}, nil
+	return &TCPServer{
+		listener: listener,
+		handler: &socket.DefaultHandler{},
+	}, nil
+}
+
+func (tcp *TCPServer) InstallProcess(process types.Process) {
+	tcp.handler = process
 }
 
 func (tcp *TCPServer) ListenAndServe() {
@@ -37,6 +46,6 @@ func (tcp *TCPServer) ListenAndServe() {
 			continue
 		}
 		
-		socket.ConnectionHandler(conn)
+		socket.ConnectionHandler(conn, tcp.handler)
 	}
 }

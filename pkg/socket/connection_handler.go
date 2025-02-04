@@ -4,21 +4,28 @@ import (
 	"log"
 	"net"
 
-	"github.com/csvitor-dev/socket.go/pkg/utils"
+	"github.com/csvitor-dev/socket.go/pkg/types"
 )
 
-func ConnectionHandler(connection net.Conn) {
+func ConnectionHandler(connection net.Conn, process types.Process) {
 	defer connection.Close()
 
-	buf := make([]byte, 1024)
-	_, err := connection.Read(buf)
-
-	log.Printf("[%v] <RECEIVE>\n", utils.LogDate())
+	request := make([]byte, 1024)
+	_, err := connection.Read(request)
 	
 	if err != nil {
+		log.Fatalln(err)
 		return
 	}
-	_, _ = connection.Write(buf)
+	log.Println("<RECEIVE>")
 	
-	log.Printf("[%v] <SEND>\n", utils.LogDate())
+	response := process.Push(request)
+	_, err = connection.Write(response)
+
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+	
+	log.Println("<SEND>")
 }

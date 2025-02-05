@@ -1,6 +1,7 @@
 package tcp
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/csvitor-dev/socket.go/pkg/socket"
@@ -10,6 +11,7 @@ import (
 type TCPServer struct {
 	listener *net.TCPListener
 	handler types.Process
+	address string
 }
 
 func createTCPAddress(address string) (*net.TCPAddr, error) {
@@ -31,6 +33,7 @@ func NewTCPServer(address string) (*TCPServer, error) {
 	return &TCPServer{
 		listener: listener,
 		handler: &socket.DefaultHandler{},
+		address: address,
 	}, nil
 }
 
@@ -39,6 +42,9 @@ func (tcp *TCPServer) InstallProcess(process types.Process) {
 }
 
 func (tcp *TCPServer) ListenAndServe() {
+	fmt.Printf("Server listen on '%v'\n", tcp.address)
+	defer tcp.listener.Close()
+
 	for {
 		conn, err := tcp.listener.Accept()
 
@@ -46,6 +52,6 @@ func (tcp *TCPServer) ListenAndServe() {
 			continue
 		}
 		
-		socket.ConnectionHandler(conn, tcp.handler)
+		go socket.ConnectionHandler(conn, tcp.handler)
 	}
 }

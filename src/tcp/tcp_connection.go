@@ -1,11 +1,13 @@
 package tcp
 
 import (
+	"fmt"
 	"net"
 )
 
 type TCPConnection struct {
 	connection *net.TCPConn
+	address string
 }
 
 func NewTCPConnection(address string) (*TCPConnection, error) {
@@ -19,8 +21,9 @@ func NewTCPConnection(address string) (*TCPConnection, error) {
 	if err != nil {
 		return nil, err
 	}
+	fmt.Printf("New client instance for '%v'\n", address)
 
-	return &TCPConnection{connection: conn}, nil
+	return &TCPConnection{connection: conn, address: address}, nil
 }
 
 func (tcp *TCPConnection) SendMessage(message []byte) error {
